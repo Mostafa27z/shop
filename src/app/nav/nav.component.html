@@ -1,0 +1,34 @@
+<nav class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <a routerLink="/" class="text-2xl font-bold text-black">TeePrint</a>
+  
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-6">
+          <a routerLink="/" class="text-gray-700 hover:text-black transition">Home</a>
+          <a routerLink="/how-it-works" class="text-gray-700 hover:text-black transition">How It Works</a>
+          <a routerLink="/upload" class="text-gray-700 hover:text-black transition">Upload</a>
+          <a routerLink="/contact" class="text-gray-700 hover:text-black transition">Contact</a>
+        </div>
+  
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden focus:outline-none" (click)="toggleMenu()">
+          <svg class="h-6 w-6 text-gray-800" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path *ngIf="!isMenuOpen" d="M4 6h16M4 12h16M4 18h16" />
+            <path *ngIf="isMenuOpen" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  
+    <!-- Mobile Menu -->
+    <div *ngIf="isMenuOpen" class="md:hidden bg-white px-4 pt-2 pb-4 space-y-2 shadow">
+      <a routerLink="/" class="block text-gray-700 hover:text-black">Home</a>
+      <a routerLink="/how-it-works" class="block text-gray-700 hover:text-black">How It Works</a>
+      <a routerLink="/upload" class="block text-gray-700 hover:text-black">Upload</a>
+      <a routerLink="/contact" class="block text-gray-700 hover:text-black">Contact</a>
+    </div>
+  </nav>
+  

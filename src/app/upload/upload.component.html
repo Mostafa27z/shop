@@ -1,0 +1,66 @@
+<div class="min-h-screen bg-white px-6 py-10">
+    <div class="max-w-5xl mx-auto">
+      <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Customize Your T-shirt</h1>
+  
+      <div class="grid md:grid-cols-2 gap-10">
+        <!-- Upload & Options -->
+        <div class="space-y-6">
+          <!-- Upload -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Upload Image</label>
+            <input type="file" accept="image/*" (change)="onImageSelected($event)" class="block w-full text-sm text-gray-600 border border-gray-300 rounded-lg p-2" />
+          </div>
+  
+          <!-- T-shirt Color -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">T-shirt Color</label>
+            <select class="w-full border border-gray-300 p-2 rounded">
+              <option>White</option>
+              <option>Black</option>
+              <option>Red</option>
+              <option>Blue</option>
+            </select>
+          </div>
+  
+          <!-- Size -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Size</label>
+            <select class="w-full border border-gray-300 p-2 rounded">
+              <option>Small</option>
+              <option>Medium</option>
+              <option>Large</option>
+              <option>XL</option>
+            </select>
+          </div>
+  
+          <!-- Print Position -->
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Print Position</label>
+            <select class="w-full border border-gray-300 p-2 rounded">
+              <option>Front</option>
+              <option>Back</option>
+              <option>Left Chest</option>
+            </select>
+          </div>
+  
+          <!-- Button -->
+          <button
+            (click)="placeOrder()"
+            class="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition"
+          >
+            Place Order
+          </button>
+        </div>
+  
+        <!-- Live Preview -->
+        <div class="flex items-center justify-center border rounded-xl p-4 bg-gray-50">
+          <div class="w-64 h-80 bg-white border rounded-lg relative flex items-center justify-center">
+            <img src="assets/tshirt-outline.png" alt="T-shirt Outline" class="absolute w-full h-full object-contain opacity-30" />
+            <img *ngIf="imageUrl" [src]="imageUrl" alt="Preview" class="max-w-[40%] max-h-[60%] z-10 rounded shadow" />
+            <p *ngIf="!imageUrl" class="text-gray-400 text-sm">Your image will appear here</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

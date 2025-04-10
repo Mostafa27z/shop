@@ -1,0 +1,69 @@
+<div class="min-h-screen bg-white px-6 py-12">
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">Get in Touch</h1>
+  
+      <div class="grid md:grid-cols-2 gap-12">
+        <!-- Contact Form -->
+        <form (submit)="submitForm(); $event.preventDefault()" class="space-y-6">
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Your Name</label>
+            <input
+              type="text"
+              required
+              class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            />
+          </div>
+  
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Email Address</label>
+            <input
+              type="email"
+              required
+              class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            />
+          </div>
+  
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Your Message</label>
+            <textarea
+              rows="5"
+              required
+              class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            ></textarea>
+          </div>
+  
+          <button type="submit" class="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
+            Send Message
+          </button>
+        </form>
+  
+        <!-- Contact Info -->
+        <div class="text-gray-700 space-y-6">
+          <div>
+            <h2 class="text-xl font-semibold mb-2">Email</h2>
+            <p class="text-gray-600">support&#64;teeprint.com</p>
+          </div>
+  
+          <div>
+            <h2 class="text-xl font-semibold mb-2">Phone</h2>
+            <p class="text-gray-600">+20 100 000 0000</p>
+          </div>
+  
+          <div>
+            <h2 class="text-xl font-semibold mb-2">Address</h2>
+            <p class="text-gray-600">123 Creative Street, Cairo, Egypt</p>
+          </div>
+  
+          <div class="mt-8">
+            <h2 class="text-xl font-semibold mb-2">Follow Us</h2>
+            <div class="flex space-x-4 text-black">
+              <a href="#" class="hover:text-gray-700">Facebook</a>
+              <a href="#" class="hover:text-gray-700">Instagram</a>
+              <a href="#" class="hover:text-gray-700">Twitter</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
