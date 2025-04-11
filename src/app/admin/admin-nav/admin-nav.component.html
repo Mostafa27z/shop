@@ -1,0 +1,56 @@
+<nav class="bg-white shadow-md px-6 py-4">
+    <div class="flex items-center justify-between">
+      <!-- Logo -->
+      <div class="text-xl font-bold text-black">Admin Panel</div>
+  
+      <!-- Hamburger (Mobile) -->
+      <button
+        class="md:hidden text-gray-700 text-2xl focus:outline-none"
+        (click)="toggleMenu()"
+      >
+        &#9776;
+      </button>
+  
+      <!-- Desktop Nav -->
+      <ul class="hidden md:flex space-x-6 text-gray-700 font-medium items-center">
+        <li>
+          <a
+            routerLink="/admin/dashboard"
+            routerLinkActive="text-black font-semibold border-b-2 border-black pb-1"
+            >Dashboard</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/admin/orders"
+            routerLinkActive="text-black font-semibold border-b-2 border-black pb-1"
+            >Orders</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/admin/products"
+            routerLinkActive="text-black font-semibold border-b-2 border-black pb-1"
+            >Products</a
+          >
+        </li>
+        <li>
+          <button
+            (click)="logout()"
+            class="text-red-500 hover:text-red-700 transition"
+          >
+            Logout
+          </button>
+        </li>
+      </ul>
+    </div>
+  
+    <!-- Mobile Menu -->
+    <div *ngIf="isMenuOpen" class="md:hidden mt-4 space-y-3 text-gray-700">
+      <a routerLink="/admin/dashboard" (click)="toggleMenu()" class="block">Dashboard</a>
+      <a routerLink="/admin/orders" (click)="toggleMenu()" class="block">Orders</a>
+      <a routerLink="/admin/products" (click)="toggleMenu()" class="block">Products</a>
+      <button (click)="logout()" class="text-red-500">Logout</button>
+    </div>
+  </nav>
+  
