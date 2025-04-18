@@ -10,13 +10,13 @@
         class="w-full md:w-1/3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
   
-      <select
+      <!-- <select
         [(ngModel)]="selectedCategory"
         class="mt-2 md:mt-0 w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg"
       >
         <option value="">All Categories</option>
         <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-      </select>
+      </select> -->
     </div>
   
     <!-- Add Product Button -->
@@ -33,9 +33,9 @@
         <thead class="bg-gray-100 text-left text-sm text-gray-600 uppercase">
           <tr>
             <th class="p-4">Product Name</th>
-            <th class="p-4">Category</th>
+            <th class="p-4">Description</th>
             <th class="p-4">Price</th>
-            <th class="p-4">Stock</th>
+            <!-- <th class="p-4">Stock</th> -->
             <th class="p-4">Actions</th>
           </tr>
         </thead>
@@ -45,9 +45,9 @@
             class="border-t text-sm hover:bg-gray-50"
           >
             <td class="p-4 font-medium text-gray-800">{{ product.name }}</td>
-            <td class="p-4">{{ product.category }}</td>
+            <td class="p-4">{{ product.description }}</td>
             <td class="p-4">${{ product.price }}</td>
-            <td class="p-4">{{ product.stock }}</td>
+            <!-- <td class="p-4">{{ product.stock }}</td> -->
             <td class="p-4 flex space-x-2">
               <button
                 (click)="editProduct(product)"
@@ -90,7 +90,7 @@
           />
         </div>
   
-        <div class="mb-4">
+        <!-- <div class="mb-4">
           <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
           <select
             id="category"
@@ -103,7 +103,7 @@
             <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
           </select>
         </div>
-  
+   -->
         <div class="mb-4">
           <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
           <input
@@ -116,7 +116,7 @@
           />
         </div>
   
-        <div class="mb-4">
+        <!-- <div class="mb-4">
           <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
           <input
             id="stock"
@@ -126,7 +126,7 @@
             required
             class="w-full px-4 py-2 border border-gray-300 rounded-lg"
           />
-        </div>
+        </div> -->
   
         <div class="mb-4">
           <label for="description" class="block text-sm font-medium text-gray-700">Description</label>

@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "app_id": "app_e18b5445-ebac-453e-a081-2884e2233032",
+      "org_id": "user_f43c6380-77a1-4948-bf44-fb51fb635670",
+      "deploy_url": "https://push-n3-par-clevercloud-customers.services.clever-cloud.com/app_e18b5445-ebac-453e-a081-2884e2233032.git",
+      "git_ssh_url": "git+ssh://git@push-n3-par-clevercloud-customers.services.clever-cloud.com/app_e18b5445-ebac-453e-a081-2884e2233032.git",
+      "name": "shop",
+      "alias": "shop"
+    }
+  ]
+}

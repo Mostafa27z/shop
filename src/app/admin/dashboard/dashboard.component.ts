@@ -1,58 +1,66 @@
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   stats = [
-    { title: 'Total Orders', value: 126, icon: '🛒' },
-    { title: 'Products', value: 42, icon: '👕' },
-    { title: 'Customers', value: 78, icon: '👥' },
-    { title: 'Revenue', value: '$3,240', icon: '💰' },
+    { title: 'Total Orders', value: 0, icon: '🛒' },
+    { title: 'Products', value: 0, icon: '👕' },
+    { title: 'Customers', value: 0, icon: '👥' },
   ];
-  orders = [
-    {
-      id: '#ORD001',
-      customer: 'Ali Mostafa',
-      product: 'Black T-Shirt',
-      date: 'Apr 11, 2025',
-      status: 'Pending',
-    },
-    {
-      id: '#ORD002',
-      customer: 'Sara Khaled',
-      product: 'White T-Shirt',
-      date: 'Apr 10, 2025',
-      status: 'Shipped',
-    },
-    {
-      id: '#ORD003',
-      customer: 'Mohamed Adel',
-      product: 'Blue Hoodie',
-      date: 'Apr 09, 2025',
-      status: 'Delivered',
-    },
-    {
-      id: '#ORD004',
-      customer: 'Yasmin Nabil',
-      product: 'Custom Tank Top',
-      date: 'Apr 08, 2025',
-      status: 'Cancelled',
-    },
-  ];
+  orders: any[] = [];
   searchTerm: string = '';
 
-get filteredOrders() {
-  return this.orders.filter(order =>
-    Object.values(order).some(value =>
-      value.toLowerCase().includes(this.searchTerm.toLowerCase())
-    )
-  );
-}
+  constructor(private http: HttpClient) {}
 
+  ngOnInit(): void {
+    this.fetchStats();
+    this.fetchOrders();
+  }
+
+  get filteredOrders() {
+    return this.orders.filter(order =>
+      Object.values(order).some(value =>
+        String(value).toLowerCase().includes(this.searchTerm.toLowerCase())
+      )
+    );
+  }
+
+  fetchStats() {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    this.http.get<any>('https://shopdb-production-fcb0.up.railway.app/api/admin/stats', { headers }).subscribe({
+      next: (res) => {
+        this.stats[0].value = res.totalOrders;
+        this.stats[1].value = res.totalProducts;
+        this.stats[2].value = res.totalCustomers;
+      },
+      error: err => {
+        console.error('Failed to fetch stats:', err);
+      }
+    });
+  }
+
+  fetchOrders() {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    this.http.get<any[]>('https://shopdb-production-fcb0.up.railway.app/api/admin/recent-orders', { headers }).subscribe({
+      next: data => this.orders = data,
+      error: err => console.error('Failed to fetch recent orders:', err)
+    });
+  }
 }

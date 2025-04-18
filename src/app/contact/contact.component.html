@@ -4,38 +4,74 @@
   
       <div class="grid md:grid-cols-2 gap-12">
         <!-- Contact Form -->
-        <form (submit)="submitForm(); $event.preventDefault()" class="space-y-6">
+        <form (ngSubmit)="submitForm()" #contactForm="ngForm" class="space-y-6" novalidate>
+          <!-- Name Field -->
           <div>
             <label class="block text-gray-700 font-medium mb-2">Your Name</label>
             <input
               type="text"
+              name="name"
               required
+              [(ngModel)]="formData.name"
+              #nameRef="ngModel"
               class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
             />
+            <p *ngIf="nameRef.invalid && nameRef.touched" class="text-red-600 text-sm mt-1">
+              Name is required.
+            </p>
           </div>
-  
+        
+          <!-- Email Field -->
           <div>
             <label class="block text-gray-700 font-medium mb-2">Email Address</label>
             <input
               type="email"
+              name="email"
               required
+              email
+              [(ngModel)]="formData.email"
+              #emailRef="ngModel"
               class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
             />
+            <p *ngIf="emailRef.errors?.['required'] && emailRef.touched" class="text-red-600 text-sm mt-1">
+              Email is required.
+            </p>
+            <p *ngIf="emailRef.errors?.['email'] && emailRef.touched" class="text-red-600 text-sm mt-1">
+              Please enter a valid email address.
+            </p>
           </div>
-  
+        
+          <!-- Message Field -->
           <div>
             <label class="block text-gray-700 font-medium mb-2">Your Message</label>
             <textarea
               rows="5"
+              name="message"
               required
+              [(ngModel)]="formData.message"
+              #messageRef="ngModel"
               class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
             ></textarea>
+            <p *ngIf="messageRef.invalid && messageRef.touched" class="text-red-600 text-sm mt-1">
+              Message is required.
+            </p>
           </div>
-  
-          <button type="submit" class="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition">
+        
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            [disabled]="contactForm.invalid"
+            [ngClass]="{
+              'bg-black text-white hover:bg-gray-800 cursor-pointer': contactForm.valid,
+              'bg-gray-300 text-gray-500 cursor-not-allowed': contactForm.invalid
+            }"
+            class="px-6 py-3 rounded-lg transition"
+          >
             Send Message
           </button>
+
         </form>
+        
   
         <!-- Contact Info -->
         <div class="text-gray-700 space-y-6">

@@ -1,8 +1,13 @@
-<app-admin-nav></app-admin-nav>
+<!-- admin-layout.component.html -->
+<div class="min-h-screen flex flex-col">
+  <!-- Navbar -->
+  <app-admin-nav></app-admin-nav>
 
+  <!-- Main content (takes up remaining space) -->
+  <div class="flex-1 pt-20">
+    <router-outlet></router-outlet>
+  </div>
 
-<!-- Main content below -->
-<div class="pt-20">
-  <router-outlet></router-outlet>
+  <!-- Footer (sticks to bottom when content is short) -->
+  <app-admin-footer></app-admin-footer>
 </div>
-<app-admin-footer></app-admin-footer>

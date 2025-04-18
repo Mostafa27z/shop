@@ -1,65 +1,87 @@
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+import { ProductService } from '../services/product.service';
+import { Product } from '../models/product.model';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-pproducts',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './pproducts.component.html',
   styleUrl: './pproducts.component.scss'
 })
-export class PproductsComponent {
+export class PproductsComponent implements OnInit {
+  products: Product[] = [];
+  filteredProducts: Product[] = [];
+  categories: string[] = [];
   searchTerm: string = '';
   selectedCategory: string = '';
-  categories: string[] = ['All', 'T-Shirts', 'Hoodies', 'Accessories'];
 
-  products = [
-    {
-      id: 'prod001',
-      name: 'Black T-Shirt',
-      category: 'T-Shirts',
-      price: 20,
-      description: 'A classic black T-shirt for all occasions.',
-      imageUrl: 'https://via.placeholder.com/150',
-    },
-    {
-      id: 'prod002',
-      name: 'White Hoodie',
-      category: 'Hoodies',
-      price: 40,
-      description: 'Stay warm in this stylish white hoodie.',
-      imageUrl: 'https://via.placeholder.com/150',
-    },
-    {
-      id: 'prod003',
-      name: 'Custom Mug',
-      category: 'Accessories',
-      price: 15,
-      description: 'A custom mug with your design.',
-      imageUrl: 'https://via.placeholder.com/150',
-    },
-    {
-      id: 'prod004',
-      name: 'Red T-Shirt',
-      category: 'T-Shirts',
-      price: 18,
-      description: 'A vibrant red T-shirt for any occasion.',
-      imageUrl: 'https://via.placeholder.com/150',
-    },
-  ];
+  constructor(
+    private productService: ProductService,
+    private categoryService: CategoryService
+  ) {}
 
-  get filteredProducts() {
-    return this.products.filter(product => {
-      const matchesSearch = product.name.toLowerCase().includes(this.searchTerm.toLowerCase());
-      const matchesCategory = this.selectedCategory
-        ? product.category === this.selectedCategory || this.selectedCategory === 'All'
-        : true;
+  ngOnInit(): void {
+    this.loadProducts();
+    this.loadCategories();
+  }
+
+  loadProducts(): void {
+    this.productService.getAll().subscribe({
+      next: (data: Product[]) => {
+        this.products = data;
+        this.applyFilters();
+      },
+      error: (error) => {
+        console.error('Error loading products:', error);
+      }
+    });
+  }
+
+  loadCategories(): void {
+    this.categoryService.getAll().subscribe({
+      next: (data) => {
+        this.categories = ['All', ...data.map((category) => category.name)];
+      },
+      error: (error) => {
+        console.error('Error loading categories:', error);
+      }
+    });
+  }
+  
+
+  applyFilters(): void {
+    this.filteredProducts = this.products.filter((product) => {
+      const matchesSearch = product.name
+        .toLowerCase()
+        .includes(this.searchTerm.toLowerCase());
+
+      const matchesCategory =
+        this.selectedCategory && this.selectedCategory !== 'All'
+          ? product.category === this.selectedCategory
+          : true;
+
       return matchesSearch && matchesCategory;
     });
   }
 
-  addToCart(productId: string) {
-    console.log(`Added product with id ${productId} to cart.`);
-    // Add logic for adding products to the cart here.
+  onSearchChange(value: string): void {
+    this.searchTerm = value;
+    this.applyFilters();
+  }
+
+  onCategoryChange(value: string): void {
+    this.selectedCategory = value;
+    this.applyFilters();
+  }
+
+  addToCart(productId: number): void {
+    console.log(`Added product with ID ${productId} to cart.`);
+    // Add to cart service or storage logic here
   }
 }

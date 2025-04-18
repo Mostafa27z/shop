@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-admin-nav',
@@ -11,15 +12,14 @@ import { RouterLink } from '@angular/router';
 })
 export class AdminNavComponent {
   isMenuOpen = false;
-
+  auth = inject(AuthService);
+  router = inject(Router);
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  logout(): void {
-    // Clear local storage or auth token here
-    console.log('Logging out...');
-    alert('Logged out!');
-    // Redirect to login or home
-  }
+  logout() {
+      this.auth.logout();
+      this.router.navigate(['/login']);
+    }
 }
