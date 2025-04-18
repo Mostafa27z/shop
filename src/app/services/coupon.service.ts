@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class CouponService {
-  private api = 'http://127.0.0.1:8000/api/coupons';
+  private api = 'https://shopdb-production-cd92.up.railway.app/api/coupons';
 
   constructor(private http: HttpClient) {}
 

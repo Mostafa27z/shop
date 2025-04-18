@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private baseUrl = 'http://127.0.0.1:8000/api';
+  private baseUrl = 'https://shopdb-production-cd92.up.railway.app/api';
 
   constructor(private http: HttpClient) {}
 

@@ -31,7 +31,7 @@ export class UsersComponent implements OnInit {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-    this.http.get<any[]>('http://127.0.0.1:8000/api/users', { headers }).subscribe({
+    this.http.get<any[]>('https://shopdb-production-cd92.up.railway.app/api/users', { headers }).subscribe({
       next: (data) => this.users = data,
       error: (err) => console.error('Failed to fetch users:', err)
     });
@@ -53,7 +53,7 @@ export class UsersComponent implements OnInit {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-    this.http.put(`http://127.0.0.1:8000/api/users/${user.id}`, {
+    this.http.put(`https://shopdb-production-cd92.up.railway.app/api/users/${user.id}`, {
       role: user.role
     }, { headers }).subscribe({
       next: (res) => console.log('User updated:', res),

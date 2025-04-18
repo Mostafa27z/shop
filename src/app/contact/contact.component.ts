@@ -20,7 +20,7 @@ export class ContactComponent {
   constructor(private http: HttpClient) {}
 
   submitForm(): void {
-    this.http.post('http://127.0.0.1:8000/api/messages', this.formData).subscribe({
+    this.http.post('https://shopdb-production-cd92.up.railway.app/api/messages', this.formData).subscribe({
       next: () => {
         alert("Thanks for reaching out! We'll get back to you soon.");
         this.formData = { name: '', email: '', message: '' };

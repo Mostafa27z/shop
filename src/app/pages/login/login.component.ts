@@ -7,12 +7,13 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],  // Ensure ReactiveFormsModule is imported here
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  loginError: string | null = null;
 
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
@@ -21,18 +22,30 @@ export class LoginComponent {
     });
   }
 
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
+
   submit(): void {
+    this.loginError = null; // reset any previous errors
     if (this.loginForm.invalid) return;
 
     this.auth.login(this.loginForm.value).subscribe({
       next: (res: any) => {
         this.auth.setToken(res.token);
         this.auth.setUser(res.user);
-        this.router.navigate(['/']);  // Navigate to home or dashboard
+        this.router.navigate(['/']);
       },
       error: (err) => {
-        console.error(err);
-        // Handle error (show error message, etc.)
+        if (err.status === 401) {
+          this.loginError = 'Incorrect email or password.';
+        } else {
+          this.loginError = 'An error occurred. Please try again later.';
+        }
       },
     });
   }

@@ -44,7 +44,7 @@
             <td class="p-4">
               <img
                 *ngIf="product.images?.length"
-                [src]="'http://localhost:8000/storage/' + product.images[0].image_path"
+                [src]="'https://shopdb-production-cd92.up.railway.app/storage/' + product.images[0].image_path"
                 alt="Product Image"
                 class="w-16 h-16 object-cover rounded"
               />
