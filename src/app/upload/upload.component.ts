@@ -82,7 +82,7 @@ export class UploadComponent {
       Authorization: `Bearer ${token}`
     });
   
-    this.http.post('https://shopdb-production-fcb0.up.railway.app/api/orders', formData, { headers })
+    this.http.post('http://127.0.0.1:8000/api/orders', formData, { headers })
       .subscribe({
         next: (response) => {
           console.log('Order placed successfully:', response);

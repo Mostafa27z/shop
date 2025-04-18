@@ -5,7 +5,7 @@ import { Category } from '../models/category.model';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
-  private api = 'https://shopdb-production-fcb0.up.railway.app/api/categories';
+  private api = 'http://127.0.0.1:8000/api/categories';
 
   constructor(private http: HttpClient) {}
 

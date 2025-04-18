@@ -38,7 +38,7 @@ export const routes: Routes = [
         {path:'upload' , component:UploadComponent , canActivate: [AuthGuard]},
         {path:'contact' , component:ContactComponent , canActivate: [GuestGuard]},
         {path:'products' , component:PproductsComponent},
-        {path:'my-orders' , component:MyOrdersComponent , canActivate: [AuthGuard]},
+        {path:'myorders' , component:MyOrdersComponent , canActivate: [AuthGuard]},
         {path:'register' , component:RegisterComponent , canActivate: [GuestGuard]},
         {path:'login' , component:LoginComponent , canActivate: [GuestGuard]},
     ],

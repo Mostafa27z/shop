@@ -26,6 +26,7 @@ export class ProductsComponent implements OnInit {
     stock: 0,
     description: ''
   };
+  selectedImage: File | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -35,7 +36,7 @@ export class ProductsComponent implements OnInit {
 
   get filteredProducts() {
     return this.products.filter(product => {
-      const name = product.name || ''; // fallback to empty string
+      const name = product.name || '';
       const category = product.category || '';
       const matchesSearch = name.toLowerCase().includes(this.searchTerm.toLowerCase());
       const matchesCategory = this.selectedCategory
@@ -44,10 +45,9 @@ export class ProductsComponent implements OnInit {
       return matchesSearch && matchesCategory;
     });
   }
-  
 
   fetchProducts() {
-    this.http.get<any[]>('https://shopdb-production-fcb0.up.railway.app/api/products').subscribe({
+    this.http.get<any[]>('http://127.0.0.1:8000/api/products').subscribe({
       next: (data) => {
         this.products = data;
       },
@@ -66,7 +66,7 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(productId: string) {
-    this.http.delete(`https://shopdb-production-fcb0.up.railway.app/api/products/${productId}`).subscribe({
+    this.http.delete(`http://127.0.0.1:8000/api/products/${productId}`).subscribe({
       next: () => {
         this.products = this.products.filter(product => product.id !== productId);
       },
@@ -76,25 +76,34 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+  onImageSelected(event: any) {
+    this.selectedImage = event.target.files[0];
+  }
+
   saveProduct() {
+    const formData = new FormData();
+    formData.append('name', this.currentProduct.name);
+    formData.append('price', this.currentProduct.price.toString());
+    formData.append('description', this.currentProduct.description);
+    if (this.selectedImage) {
+      formData.append('image', this.selectedImage);
+    }
+
     if (this.isEditMode) {
-      this.http.put(`https://shopdb-production-fcb0.up.railway.app/api/products/${this.currentProduct.id}`, this.currentProduct).subscribe({
-        next: (updated) => {
-          const index = this.products.findIndex(p => p.id === this.currentProduct.id);
-          this.products[index] = updated;
+      this.http.post(`http://127.0.0.1:8000/api/products/${this.currentProduct.id}?_method=PUT`, formData).subscribe({
+        next: () => {
           this.closeModal();
           this.fetchProducts();
-          
         },
         error: (err) => {
           console.error('Failed to update product:', err);
         }
       });
     } else {
-      this.http.post('https://shopdb-production-fcb0.up.railway.app/api/products', this.currentProduct).subscribe({
-        next: (created) => {
-          this.products.push(created);
+      this.http.post('http://127.0.0.1:8000/api/products', formData).subscribe({
+        next: () => {
           this.closeModal();
+          this.fetchProducts();
         },
         error: (err) => {
           console.error('Failed to create product:', err);
@@ -105,22 +114,25 @@ export class ProductsComponent implements OnInit {
 
   openModal(isEdit: boolean, product?: any) {
     this.isEditMode = isEdit;
+    this.selectedImage = null;
+
     if (isEdit && product) {
       this.currentProduct = { ...product };
     } else {
       this.currentProduct = {
         id: '',
         name: '',
-        // category: '',
         price: 0,
         stock: 0,
         description: ''
       };
     }
+
     this.modalOpen = true;
   }
 
   closeModal() {
     this.modalOpen = false;
+    this.selectedImage = null;
   }
 }

@@ -15,7 +15,7 @@
           <!-- Show Contact link only for guests -->
           <a *ngIf="!isLoggedIn" routerLink="/contact" class="text-gray-700 hover:text-black transition">Contact</a>
   
-          <a routerLink="/products" class="text-gray-700 hover:text-black transition">Products</a>
+          <a routerLink="/myorders" class="text-gray-700 hover:text-black transition">My Orders</a>
         
           <ng-container *ngIf="!isLoggedIn; else loggedInBlock">
             <a routerLink="/login" class="text-gray-700 hover:text-black transition">Login</a>
@@ -44,7 +44,7 @@
       <a *ngIf="isLoggedIn" routerLink="/how-it-works" class="block text-gray-700 hover:text-black">How It Works</a>
       <a *ngIf="isLoggedIn" routerLink="/upload" class="block text-gray-700 hover:text-black">Upload</a>
       <a *ngIf="!isLoggedIn" routerLink="/contact" class="block text-gray-700 hover:text-black">Contact</a>
-      <a routerLink="/products" class="block text-gray-700 hover:text-black">Products</a>
+      <a routerLink="/myorders" class="block text-gray-700 hover:text-black">My Orders</a>
     
       <ng-container *ngIf="!isLoggedIn; else mobileLoggedIn">
         <a routerLink="/login" class="block text-gray-700 hover:text-black">Login</a>

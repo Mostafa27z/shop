@@ -32,38 +32,34 @@
       <table class="min-w-full bg-white rounded-xl overflow-hidden shadow-md">
         <thead class="bg-gray-100 text-left text-sm text-gray-600 uppercase">
           <tr>
+            <th class="p-4">Image</th>
             <th class="p-4">Product Name</th>
             <th class="p-4">Description</th>
             <th class="p-4">Price</th>
-            <!-- <th class="p-4">Stock</th> -->
             <th class="p-4">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr
-            *ngFor="let product of filteredProducts"
-            class="border-t text-sm hover:bg-gray-50"
-          >
+          <tr *ngFor="let product of filteredProducts" class="border-t text-sm hover:bg-gray-50">
+            <td class="p-4">
+              <img
+                *ngIf="product.images?.length"
+                [src]="'http://localhost:8000/storage/' + product.images[0].image_path"
+                alt="Product Image"
+                class="w-16 h-16 object-cover rounded"
+              />
+              <span *ngIf="!product.images?.length" class="text-gray-400 italic">No image</span>
+            </td>
             <td class="p-4 font-medium text-gray-800">{{ product.name }}</td>
             <td class="p-4">{{ product.description }}</td>
             <td class="p-4">${{ product.price }}</td>
-            <!-- <td class="p-4">{{ product.stock }}</td> -->
             <td class="p-4 flex space-x-2">
-              <button
-                (click)="editProduct(product)"
-                class="text-yellow-600 hover:text-yellow-700"
-              >
-                ✏️ Edit
-              </button>
-              <button
-                (click)="deleteProduct(product.id)"
-                class="text-red-600 hover:text-red-700"
-              >
-                🗑️ Delete
-              </button>
+              <button (click)="editProduct(product)" class="text-yellow-600 hover:text-yellow-700">✏️ Edit</button>
+              <button (click)="deleteProduct(product.id)" class="text-red-600 hover:text-red-700">🗑️ Delete</button>
             </td>
           </tr>
         </tbody>
+        
       </table>
     </div>
   </div>
@@ -127,7 +123,17 @@
             class="w-full px-4 py-2 border border-gray-300 rounded-lg"
           />
         </div> -->
-  
+  <!-- Image Upload -->
+<div class="mb-4">
+  <label for="image" class="block text-sm font-medium text-gray-700">Product Image</label>
+  <input
+    id="image"
+    type="file"
+    (change)="onImageSelected($event)"
+    class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+  />
+</div>
+
         <div class="mb-4">
           <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
           <textarea

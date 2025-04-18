@@ -5,7 +5,7 @@ import { Product } from '../models/product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-  private api = 'https://shopdb-production-fcb0.up.railway.app/api/products';
+  private api = 'http://127.0.0.1:8000/api/products';
 
   constructor(private http: HttpClient) {}
 

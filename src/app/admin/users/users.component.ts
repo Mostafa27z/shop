@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -17,10 +18,12 @@ export class UsersComponent implements OnInit {
   searchTerm: string = '';
   selectedRole: string = '';
   roles: string[] = ['admin', 'user'];
+  currentUserId: number = 0;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.currentUserId = this.authService.getUser().id;
     this.fetchUsers();
   }
 
@@ -28,27 +31,29 @@ export class UsersComponent implements OnInit {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-    this.http.get<any[]>('https://shopdb-production-fcb0.up.railway.app/api/users', { headers }).subscribe({
+    this.http.get<any[]>('http://127.0.0.1:8000/api/users', { headers }).subscribe({
       next: (data) => this.users = data,
       error: (err) => console.error('Failed to fetch users:', err)
     });
   }
 
   get filteredUsers() {
-    return this.users.filter(user => {
-      const matchesSearch = Object.values(user).some(val =>
-        typeof val === 'string' && val.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-      const matchesRole = this.selectedRole ? user.role === this.selectedRole : true;
-      return matchesSearch && matchesRole;
-    });
+    return this.users
+      .filter(user => user.id !== this.currentUserId) // 👈 exclude current user
+      .filter(user => {
+        const matchesSearch = Object.values(user).some(val =>
+          typeof val === 'string' && val.toLowerCase().includes(this.searchTerm.toLowerCase())
+        );
+        const matchesRole = this.selectedRole ? user.role === this.selectedRole : true;
+        return matchesSearch && matchesRole;
+      });
   }
 
   updateUser(user: any): void {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-    this.http.put(`https://shopdb-production-fcb0.up.railway.app/api/users/${user.id}`, {
+    this.http.put(`http://127.0.0.1:8000/api/users/${user.id}`, {
       role: user.role
     }, { headers }).subscribe({
       next: (res) => console.log('User updated:', res),
