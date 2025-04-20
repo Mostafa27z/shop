@@ -37,6 +37,7 @@
           <th class="p-4">Phone</th>
           <th class="p-4">Size</th>
           <th class="p-4">Color</th>
+          <th class="p-4">Notes</th>
           <th class="p-4">Image</th>
           <th class="p-4">Date</th>
           <th class="p-4">Status</th>
@@ -49,6 +50,9 @@
           <td class="p-4">{{ order.phone }}</td>
           <td class="p-4">{{ order.size }}</td>
           <td class="p-4">{{ order.color }}</td>
+          <td class="p-4 text-xs text-gray-700 max-w-[150px] break-words">
+            {{ order.notes || '—' }}
+          </td>
           <td class="p-4">
             <img
               *ngIf="order.image_url"
@@ -68,7 +72,6 @@
             </select>
           </td>
         </tr>
-        
       </tbody>
     </table>
   </div>

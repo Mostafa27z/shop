@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './my-orders.component.html',
   styleUrls: ['./my-orders.component.scss'],
   standalone: true,
-  imports:[CommonModule]
+  imports: [CommonModule],
 })
 export class MyOrdersComponent implements OnInit {
   orders: any[] = [];
@@ -24,20 +24,19 @@ export class MyOrdersComponent implements OnInit {
       alert('You must be logged in to view orders.');
       return;
     }
-  
+
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  
+
     this.http.get<any[]>('https://shopdb-production-cd92.up.railway.app/api/my-orders', { headers }).subscribe({
-      next: (data) => {this.orders = data
-        console.log(data)
+      next: (data) => {
+        this.orders = data;
+        console.log(data); // ✅ Will now include "notes" field
       },
       error: (err) => {
         console.error('Failed to load orders', err);
         alert('Could not load orders. Please make sure you are logged in.');
       }
-      
     });
-   
   }
 
   canDelete(orderDate: string): boolean {

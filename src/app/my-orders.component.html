@@ -13,9 +13,9 @@
 
     <div class="text-sm text-gray-600 space-y-1">
       <p><strong>Placed At:</strong> {{ order.created_at | date:'medium' }}</p>
-      <!-- <p><strong>Total:</strong> {{ order.total | currency }}</p> -->
       <p><strong>Color:</strong> {{ order.color }}</p>
       <p><strong>Size:</strong> {{ order.size }}</p>
+      <p *ngIf="order.notes"><strong>Notes:</strong> {{ order.notes }}</p> <!-- ✅ Notes Display -->
     </div>
 
     <div class="mt-4">

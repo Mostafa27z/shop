@@ -15,8 +15,8 @@ import { CategoryService } from '../services/category.service';
   styleUrl: './pproducts.component.scss'
 })
 export class PproductsComponent implements OnInit {
-  products: Product[] = [];
-  filteredProducts: Product[] = [];
+  products: any[] = [];
+  filteredProducts: any[] = [];
   categories: string[] = [];
   searchTerm: string = '';
   selectedCategory: string = '';
@@ -33,9 +33,10 @@ export class PproductsComponent implements OnInit {
 
   loadProducts(): void {
     this.productService.getAll().subscribe({
-      next: (data: Product[]) => {
+      next: (data:any[]) => {
         this.products = data;
         this.applyFilters();
+        console.log(this.products)
       },
       error: (error) => {
         console.error('Error loading products:', error);

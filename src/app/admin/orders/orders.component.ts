@@ -49,8 +49,20 @@ export class OrdersComponent implements OnInit {
   }
 
   exportToExcel(): void {
-    const worksheet = XLSX.utils.json_to_sheet(this.filteredOrders);
-    const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+    // Create a clean export object
+    const exportData = this.filteredOrders.map(order => ({
+      'Order ID': order.id,
+      'Customer': order.customer_name,
+      'Phone': order.phone,
+      'Size': order.size,
+      'Color': order.color,
+      'Notes': order.notes || '',
+      'Date': order.created_at,
+      'Status': order.status,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = { Sheets: { data: worksheet }, SheetNames: ['Orders'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
     FileSaver.saveAs(blob, 'orders.xlsx');

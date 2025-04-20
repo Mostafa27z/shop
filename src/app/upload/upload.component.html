@@ -85,6 +85,17 @@
               <option value="left_chest">Left Chest</option>
             </select>
           </div>
+<!-- Notes (optional) -->
+        <div>
+          <label class="block mb-2 text-sm font-medium">Notes (optional)</label>
+          <textarea
+            name="notes"
+            [(ngModel)]="orderData.notes"
+            class="block w-full text-sm text-gray-600 border border-gray-300 rounded-lg p-2"
+            rows="3"
+            placeholder="Any specific instructions or requests?"
+          ></textarea>
+        </div>
 
           <!-- Coupon Code (optional) -->
           <div>

@@ -29,20 +29,22 @@
       class="border rounded-lg overflow-hidden shadow-lg bg-white"
     >
       <img
-        [src]="product.image_url"
-        alt="{{ product.name }}"
-        class="w-full h-48 object-cover"
-      />
+                *ngIf="product.images?.length"
+                [src]="'https://shopdb-production-cd92.up.railway.app/storage/' + product.images[0].image_path"
+                alt="Product Image"
+                class="w-full h-48 object-cover block"
+              />
+              <span *ngIf="!product.images?.length" class="text-gray-400 italic">No image</span>
       <div class="p-4">
         <h3 class="text-lg font-semibold text-gray-800">{{ product.name }}</h3>
         <p class="text-sm text-gray-600 mb-2">{{ product.description }}</p>
-        <p class="font-bold text-gray-800">${{ product.price }}</p>
-        <button
+        <p class="font-bold text-gray-800">L.E.{{ product.price }}</p>
+        <!-- <button
           (click)="addToCart(product.id)"
           class="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
         >
           Add to Cart
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
