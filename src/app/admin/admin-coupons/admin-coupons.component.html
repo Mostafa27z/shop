@@ -1,0 +1,79 @@
+<div class="container px-4 mx-auto">
+    <h1 class="text-2xl font-semibold mb-4">Manage Coupons</h1>
+  
+    <!-- Responsive Table Container -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full table-auto border">
+        <thead>
+          <tr class="bg-gray-100 text-sm sm:text-base">
+            <th class="px-4 py-2 whitespace-nowrap">Code</th>
+            <th class="px-4 py-2 whitespace-nowrap">Discount Type</th>
+            <th class="px-4 py-2 whitespace-nowrap">Value</th>
+            <!-- <th class="px-4 py-2 whitespace-nowrap">Min Order</th>
+            <th class="px-4 py-2 whitespace-nowrap">Usage Limit</th> -->
+            <th class="px-4 py-2 whitespace-nowrap">Expires At</th>
+            <th class="px-4 py-2 whitespace-nowrap">Actions</th>
+          </tr>
+        </thead>
+        <tbody class = 'text-center '>
+          <tr *ngFor="let coupon of coupons" class="text-sm sm:text-base">
+            <td class="px-4 py-2">{{ coupon.code }}</td>
+            <td class="px-4 py-2 capitalize">{{ coupon.type }}</td>
+            <td class="px-4 py-2">{{ coupon.value }}</td>
+            <!-- <td class="px-4 py-2">{{ coupon.min_order_amount }}</td>
+            <td class="px-4 py-2">{{ coupon.usage_limit }}</td> -->
+            <td class="px-4 py-2">{{ coupon.expires_at | date }}</td>
+            <td class="px-4 py-2 space-x-2">
+              <button (click)="editCoupon(coupon.id)" class="text-blue-600 hover:underline">Edit</button>
+              <button (click)="deleteCoupon(coupon.id)" class="text-red-600 hover:underline">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Add Coupon Button -->
+    <div class="mt-6">
+      <button (click)="openAddCouponModal()" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 w-full sm:w-auto">
+        Add Coupon
+      </button>
+    </div>
+  
+    <!-- Coupon Modal -->
+    <div *ngIf="isModalOpen" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+      <div class="bg-white p-4 sm:p-6 rounded-md w-full max-w-md mx-4">
+        <h2 class="text-xl sm:text-2xl font-semibold mb-4">{{ isEditMode ? 'Edit Coupon' : 'Add Coupon' }}</h2>
+  
+        <form (ngSubmit)="saveCoupon()" class="space-y-4">
+          <div>
+            <label class="block mb-1">Code</label>
+            <input [(ngModel)]="couponForm.code" name="code" class="w-full p-2 border rounded-md" required />
+          </div>
+          <div>
+            <label class="block mb-1">Discount Type</label>
+            <select [(ngModel)]="couponForm.type" name="type" class="w-full p-2 border rounded-md" required>
+              <option value="fixed">Fixed</option>
+              <option value="percent">Percentage</option>
+            </select>
+          </div>
+          <div>
+            <label class="block mb-1">Discount Value</label>
+            <input [(ngModel)]="couponForm.value" name="value" type="number" class="w-full p-2 border rounded-md" required />
+          </div>
+          <div>
+            <label class="block mb-1">Expires At</label>
+            <input [(ngModel)]="couponForm.expires_at" name="expires_at" type="date" class="w-full p-2 border rounded-md" />
+          </div>
+          <div class="flex justify-end space-x-2">
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+              {{ isEditMode ? 'Update' : 'Add' }}
+            </button>
+            <button type="button" (click)="closeModal()" class="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

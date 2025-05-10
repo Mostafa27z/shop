@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-upload',
@@ -11,6 +12,14 @@ import { CommonModule } from '@angular/common';
   imports: [FormsModule, CommonModule],
 })
 export class UploadComponent {
+  productName: string = '';
+  ngOnInit(): void {
+    // Retrieve product name from query params
+    this.route.queryParams.subscribe(params => {
+      this.productName = params['productName'] || ''; // Default to empty string if no productName
+      this.orderData.notes = this.productName ;
+    });
+  }
   // Preview image source
   imageUrl: string | ArrayBuffer | null = null;
 
@@ -33,7 +42,7 @@ export class UploadComponent {
 
   loading = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient ,private route: ActivatedRoute) {}
 
   // Handle file input change
   onImageSelected(event: Event): void {
@@ -41,7 +50,7 @@ export class UploadComponent {
     const file = input?.files?.[0];
     if (file) {
       this.selectedFile = file;
-
+      console.log(this.selectedFile)
       const reader = new FileReader();
       reader.onload = () => {
         this.imageUrl = reader.result;
@@ -85,44 +94,26 @@ export class UploadComponent {
     formData.append('size', this.selectedSize);
     formData.append('print_position', this.selectedPrintPosition);
     formData.append('image', this.selectedFile);
-
+    console.log(this.selectedFile)
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
 
-    this.http.post('https://shopdb-production-cd92.up.railway.app/api/orders', formData, { headers })
-      .subscribe({
-        next: (response) => {
-          console.log('Order placed successfully:', response);
-          alert('Order placed! We\'ll contact you soon.');
-          form.resetForm();
-          this.resetState();
-        },
-        error: (error) => {
-          console.error('Error placing order:', error);
-          alert('There was an error placing your order. Please check your details and try again.');
+    this.http
+      .post('http://127.0.0.1:8000/api/orders', formData, { headers })
+      .subscribe(
+        (response) => {
           this.loading = false;
+          console.log('Order placed successfully:', response);
+          alert('Your order has been placed successfully.');
+          form.reset();
+          this.imageUrl = null;  // Clear preview
+        },
+        (error) => {
+          this.loading = false;
+          console.error('Error placing order:', error);
+          alert('There was an error placing your order. Please try again later.');
         }
-      });
-  }
-
-  // Reset form and image preview
-  resetState(): void {
-    this.imageUrl = null;
-    this.selectedFile = null;
-    this.loading = false;
-
-    // Reset dropdowns to default if needed
-    this.selectedColor = 'white';
-    this.selectedSize = 'small';
-    this.selectedPrintPosition = 'front';
-
-    // Clear form fields
-    this.orderData = {
-      customer_name: '',
-      phone: '',
-      coupon_code: '',
-      notes: ''
-    };
+      );
   }
 }

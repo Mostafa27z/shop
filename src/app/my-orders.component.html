@@ -21,7 +21,7 @@
     <div class="mt-4">
       <img
         *ngIf="order.image_url"
-        [src]="'https://shopdb-production-cd92.up.railway.app/storage/' + order.image_url"
+        [src]="'http://127.0.0.1:8000/storage/' + order.image_url"
         class="w-full h-auto rounded-lg border"
         alt="Order Image"
       />

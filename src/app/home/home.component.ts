@@ -1,21 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 import { ProductService } from '../services/product.service';
-import { Product } from '../models/product.model';
 import { CategoryService } from '../services/category.service';
+
 @Component({
   selector: 'app-home',
-  imports: [RouterLink , CommonModule, FormsModule, HttpClientModule],
+  imports: [RouterLink, CommonModule, FormsModule, HttpClientModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-products: any[] = [];
+  products: any[] = [];
   filteredProducts: any[] = [];
   categories: string[] = [];
   searchTerm: string = '';
@@ -33,10 +31,10 @@ products: any[] = [];
 
   loadProducts(): void {
     this.productService.getAll().subscribe({
-      next: (data:any[]) => {
+      next: (data: any[]) => {
         this.products = data;
         this.applyFilters();
-        console.log(this.products)
+        console.log(this.products);
       },
       error: (error) => {
         console.error('Error loading products:', error);
@@ -54,7 +52,6 @@ products: any[] = [];
       }
     });
   }
-  
 
   applyFilters(): void {
     this.filteredProducts = this.products.filter((product) => {

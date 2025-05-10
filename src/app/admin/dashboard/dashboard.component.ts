@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
       Authorization: `Bearer ${token}`
     });
 
-    this.http.get<any>('https://shopdb-production-cd92.up.railway.app/api/admin/stats', { headers }).subscribe({
+    this.http.get<any>('http://127.0.0.1:8000/api/admin/stats', { headers }).subscribe({
       next: (res) => {
         this.stats[0].value = res.totalOrders;
         this.stats[1].value = res.totalProducts;
@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
       Authorization: `Bearer ${token}`
     });
 
-    this.http.get<any[]>('https://shopdb-production-cd92.up.railway.app/api/admin/recent-orders', { headers }).subscribe({
+    this.http.get<any[]>('http://127.0.0.1:8000/api/admin/recent-orders', { headers }).subscribe({
       next: data => this.orders = data,
       error: err => console.error('Failed to fetch recent orders:', err)
     });

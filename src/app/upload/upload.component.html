@@ -1,10 +1,10 @@
 <div class="min-h-screen bg-white px-6 py-10">
   <div class="max-w-5xl mx-auto">
-    <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Customize Your T-shirt</h1>
+    <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Customize Your T-shirt {{this.productName}}</h1>
 
-    <form #formRef="ngForm" (ngSubmit)="placeOrder(formRef)" novalidate>
+    <form #formRef="ngForm" (ngSubmit)="placeOrder(formRef)" novalidate enctype="multipart/form-data">
       <div class="grid md:grid-cols-2 gap-10">
-        <!-- Upload & Options -->
+        <!-- Left Section: Inputs -->
         <div class="space-y-6">
           <!-- Name -->
           <div>
@@ -52,8 +52,7 @@
             >
               <option value="white">White</option>
               <option value="black">Black</option>
-              <option value="red">Red</option>
-              <option value="blue">Blue</option>
+              
             </select>
           </div>
 
@@ -82,22 +81,24 @@
             >
               <option value="front">Front</option>
               <option value="back">Back</option>
-              <option value="left_chest">Left Chest</option>
+              
             </select>
           </div>
-<!-- Notes (optional) -->
-        <div>
-          <label class="block mb-2 text-sm font-medium">Notes (optional)</label>
-          <textarea
-            name="notes"
-            [(ngModel)]="orderData.notes"
-            class="block w-full text-sm text-gray-600 border border-gray-300 rounded-lg p-2"
-            rows="3"
-            placeholder="Any specific instructions or requests?"
-          ></textarea>
-        </div>
 
-          <!-- Coupon Code (optional) -->
+          <!-- Notes -->
+          <div>
+            <label class="block mb-2 text-sm font-medium">Notes (optional)</label>
+            <textarea
+              name="notes"
+              [(ngModel)]="orderData.notes"
+              class="block w-full text-sm text-gray-600 border border-gray-300 rounded-lg p-2"
+              rows="3"
+              placeholder="Any specific instructions or requests?"
+              value="{{this.productName}}"
+            ></textarea>
+          </div>
+
+          <!-- Coupon Code -->
           <div>
             <label class="block mb-2 text-sm font-medium">Coupon (optional)</label>
             <input
@@ -108,46 +109,77 @@
             />
           </div>
 
-          <!-- Submit Button (click)="placeOrder(formRef)" -->
+          <!-- Submit Button -->
           <button
-  type="submit"
-  [disabled]="loading"
-  class="bg-black text-white px-6 py-3 rounded-lg transition hover:bg-gray-800 flex items-center justify-center gap-2"
->
-  <span *ngIf="!loading">Place Order</span>
-  <span *ngIf="loading" class="flex items-center gap-2">
-    <svg class="w-5 h-5 animate-spin text-white" fill="none" viewBox="0 0 24 24">
-      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-      <path
-        class="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-      ></path>
-    </svg>
-    Loading...
-  </span>
-</button>
-
+            type="submit"
+            [disabled]="loading"
+            class="bg-black text-white px-6 py-3 rounded-lg transition hover:bg-gray-800 flex items-center justify-center gap-2"
+          >
+            <span *ngIf="!loading">Place Order</span>
+            <span *ngIf="loading" class="flex items-center gap-2">
+              <svg class="w-5 h-5 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                ></path>
+              </svg>
+              Loading...
+            </span>
+          </button>
         </div>
 
-        <!-- Live Preview -->
-        <div class="flex items-center justify-center border rounded-xl p-4 bg-gray-50">
+        <!-- Right Section: Live Preview -->
+        <div class="flex items-center flex-col gap-3 ustify-center border rounded-xl p-4 bg-gray-50">
           <div class="w-64 h-80 bg-white border rounded-lg relative flex items-center justify-center">
+            <!-- Outline -->
             <img
               src="assets/tshirt-outline.png"
               alt="T-shirt Outline"
               class="absolute w-full h-full object-contain opacity-30"
             />
+
+            <!-- Uploaded Image -->
             <img
               *ngIf="imageUrl"
               [src]="imageUrl"
               alt="Preview"
               class="max-w-[40%] max-h-[60%] z-10 rounded shadow"
             />
+
+            <!-- Placeholder -->
             <p *ngIf="!imageUrl" class="text-gray-400 text-sm">Your image will appear here</p>
+
+            <!-- Fixed T-shirt Image (No change based on color) -->
             <img
-              *ngIf="selectedColor"
-              [src]="'assets/tshirt-' + selectedColor + '.png'"
+              src="assets/front.jpg" 
+              alt="T-shirt Preview"
+              class="absolute w-full h-full object-contain opacity-100"
+            />
+          </div>
+          <div class="w-64 h-80 bg-white border rounded-lg relative flex items-center justify-center">
+            <!-- Outline -->
+            <img
+              src="assets/tshirt-outline.png"
+              alt="T-shirt Outline"
+              class="absolute w-full h-full object-contain opacity-30"
+            />
+
+            <!-- Uploaded Image -->
+            <img
+              *ngIf="imageUrl"
+              [src]="imageUrl"
+              alt="Preview"
+              class="max-w-[40%] max-h-[60%] z-10 rounded shadow"
+            />
+
+            <!-- Placeholder -->
+            <p *ngIf="!imageUrl" class="text-gray-400 text-sm">Your image will appear here</p>
+
+            <!-- Fixed T-shirt Image (No change based on color) -->
+            <img
+              src="assets/back.jpg" 
               alt="T-shirt Preview"
               class="absolute w-full h-full object-contain opacity-100"
             />

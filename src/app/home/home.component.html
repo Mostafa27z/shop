@@ -1,55 +1,48 @@
-<div class="min-h-screen bg-white flex flex-col items-center justify-center text-center p-6">
-    <!-- Hero Section -->
-     <div class="bg-[#232323] w-[100vw] flex justify-center items-center py-6 ">
-      <img src="assets/logo.jpg" class="w-60" alt="">
-     </div>
-    <div class="max-w-2xl">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Print Your Photo on a T-shirt</h1>
-      <p class="text-gray-600 text-lg mb-6">Upload your favorite image and get it printed on a high-quality t-shirt. Fast, easy, and stylish!</p>
-      
-    </div>
-  
-    <!-- Example T-shirt Designs -->
-    <!-- <div class="mt-16 w-full max-w-5xl">
-      <h2 class="text-2xl font-semibold text-gray-700 mb-6">Some of Our Prints</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
-        <img src="assets/sample1.jpg" alt="Sample 1" class="rounded-xl shadow-md object-cover h-64 w-full">
-        <img src="assets/sample2.jpg" alt="Sample 2" class="rounded-xl shadow-md object-cover h-64 w-full">
-        <img src="assets/sample1.jpg" alt="Sample 3" class="rounded-xl shadow-md object-cover h-64 w-full">
-      </div>
-    </div> -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <div
-        *ngFor="let product of filteredProducts"
-        class="border rounded-lg overflow-hidden shadow-lg bg-white"
-      >
-        <img
-                  *ngIf="product.images?.length"
-                  [src]="'https://shopdb-production-cd92.up.railway.app/storage/' + product.images[0].image_path"
-                  alt="Product Image"
-                  class="w-full h-48 object-cover block"
-                />
-                <span *ngIf="!product.images?.length" class="text-gray-400 italic">No image</span>
-        <div class="p-4">
-          <h3 class="text-lg font-semibold text-gray-800">{{ product.name }}</h3>
-          <p class="text-sm text-gray-600 mb-2">{{ product.description }}</p>
-          <p class="font-bold text-gray-800">L.E.{{ product.price }}</p>
-          <!-- <button
-            (click)="addToCart(product.id)"
-            class="mt-4 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-          >
-            Add to Cart
-          </button> -->
-        </div>
-      </div>
-
-      
-    </div>
-    <a
-        routerLink="/upload"
-        class="inline-block bg-black text-white px-6 py-3 rounded-2xl hover:bg-gray-800 transition mt-6"
-      >
-        Start Designing
-      </a>
+<div class="min-h-screen bg-white flex flex-col items-center justify-center text-center p-6 pt-0">
+  <!-- Hero Section -->
+  <div class="bg-[#232323] w-[100vw] flex justify-center items-center py-6">
+    <img src="assets/logo.jpg" class="w-60" alt="">
   </div>
-  
+  <div class="max-w-2xl">
+    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Print Your Photo on a T-shirt</h1>
+    <p class="text-gray-600 text-lg mb-6">Upload your favorite image and get it printed on a high-quality t-shirt. Fast, easy, and stylish!</p>
+  </div>
+
+  <!-- Product Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div
+      *ngFor="let product of filteredProducts"
+      class="border rounded-lg overflow-hidden shadow-lg bg-white"
+    >
+      <div *ngIf="product.images?.length > 0" class="flex justify-center space-x-2 py-4">
+        <img *ngFor="let image of product.images" 
+             [src]="'http://127.0.0.1:8000/storage/' + image.image_path" 
+             alt="Product Image"
+             class="w-24 h-24 object-cover rounded-lg">
+      </div>
+      <div *ngIf="product.images?.length === 0" class="text-center py-4">
+        <span class="text-gray-400 italic">No image</span>
+      </div>
+      <div class="p-4">
+        <h3 class="text-lg font-semibold text-gray-800">{{ product.name }}</h3>
+        <p class="text-sm text-gray-600 mb-2">{{ product.description }}</p>
+        <p class="font-bold text-gray-800">L.E.{{ product.price }}</p>
+        <!-- Add to cart button (disabled or not used for now) -->
+      </div>
+      <a 
+        [routerLink]="['/upload']" 
+        [queryParams]="{ productName: product.name }" 
+        class="inline-block bg-black text-white px-6 py-3 rounded-2xl hover:bg-gray-800 transition my-6"
+      >
+        Buy Now
+      </a>
+    </div>
+  </div>
+
+  <a
+    routerLink="/upload"
+    class="inline-block bg-black text-white px-6 py-3 rounded-2xl hover:bg-gray-800 transition mt-6"
+  >
+    Start Designing
+  </a>
+</div>

@@ -1,26 +1,28 @@
-// coupon.service.ts
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class CouponService {
-  private api = 'https://shopdb-production-cd92.up.railway.app/api/coupons';
+  private apiUrl = 'http://127.0.0.1:8000/api/coupons'; // Adjust the API URL
 
   constructor(private http: HttpClient) {}
 
-  getAll() {
-    return this.http.get(this.api);
+  getCoupons(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
-  create(data: any) {
-    return this.http.post(this.api, data);
+  addCoupon(coupon: any): Observable<any> {
+    return this.http.post(this.apiUrl, coupon);
   }
 
-  update(id: number, data: any) {
-    return this.http.put(`${this.api}/${id}`, data);
+  updateCoupon(coupon: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${coupon.id}`, coupon);
   }
 
-  delete(id: number) {
-    return this.http.delete(`${this.api}/${id}`);
+  deleteCoupon(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

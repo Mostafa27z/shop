@@ -16,6 +16,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { MyOrdersComponent } from './my-orders.component';
 import { AdminAuthGuard } from './auth/admin-auth.guard';
 import { UsersComponent } from './admin/users/users.component';
+import { AdminCouponsComponent } from './admin/admin-coupons/admin-coupons.component';
 
 export const routes: Routes = [
     
@@ -28,6 +29,7 @@ export const routes: Routes = [
       { path: 'orders', component: OrdersComponent },
       { path: 'products', component: ProductsComponent },
       { path: 'users', component: UsersComponent },
+      { path: 'coupon', component: AdminCouponsComponent },
     ],
   } ,
   {path: '',

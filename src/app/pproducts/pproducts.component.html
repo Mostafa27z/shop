@@ -30,7 +30,7 @@
     >
       <img
                 *ngIf="product.images?.length"
-                [src]="'https://shopdb-production-cd92.up.railway.app/storage/' + product.images[0].image_path"
+                [src]="'http://127.0.0.1:8000/storage/' + product.images[0].image_path"
                 alt="Product Image"
                 class="w-full h-48 object-cover block"
               />
