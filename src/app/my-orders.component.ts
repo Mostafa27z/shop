@@ -27,7 +27,7 @@ export class MyOrdersComponent implements OnInit {
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get<any[]>('http://127.0.0.1:8000/api/my-orders', { headers }).subscribe({
+    this.http.get<any[]>('https://shopdb-production-cd92.up.railway.app/api/my-orders', { headers }).subscribe({
       next: (data) => {
         this.orders = data;
         console.log(data); // ✅ Will now include "notes" field
@@ -48,7 +48,7 @@ export class MyOrdersComponent implements OnInit {
 
   deleteOrder(id: number): void {
     if (confirm('Are you sure you want to delete this order?')) {
-      this.http.delete(`http://127.0.0.1:8000/api/orders/${id}`).subscribe({
+      this.http.delete(`https://shopdb-production-cd92.up.railway.app/api/orders/${id}`).subscribe({
         next: () => {
           this.orders = this.orders.filter(o => o.id !== id);
           alert('Order deleted successfully.');

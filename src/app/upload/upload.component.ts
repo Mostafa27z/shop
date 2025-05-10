@@ -100,7 +100,7 @@ export class UploadComponent {
     });
 
     this.http
-      .post('http://127.0.0.1:8000/api/orders', formData, { headers })
+      .post('https://shopdb-production-cd92.up.railway.app/api/orders', formData, { headers })
       .subscribe(
         (response) => {
           this.loading = false;

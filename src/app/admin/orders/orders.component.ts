@@ -28,7 +28,7 @@ export class OrdersComponent implements OnInit {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-    this.http.get<any[]>('http://127.0.0.1:8000/api/orders', { headers }).subscribe({
+    this.http.get<any[]>('https://shopdb-production-cd92.up.railway.app/api/orders', { headers }).subscribe({
       next: (data) => {
         this.orders = data;
       },
@@ -77,7 +77,7 @@ export class OrdersComponent implements OnInit {
 
     const body = { status: order.status };
 
-    this.http.post(`http://127.0.0.1:8000/api/orders/${order.id}/status`, body, { headers }).subscribe({
+    this.http.post(`https://shopdb-production-cd92.up.railway.app/api/orders/${order.id}/status`, body, { headers }).subscribe({
       next: () => {
         console.log(`Order #${order.id} status updated to ${order.status}`);
       },

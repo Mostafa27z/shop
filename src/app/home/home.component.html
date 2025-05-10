@@ -16,7 +16,7 @@
     >
       <div *ngIf="product.images?.length > 0" class="flex justify-center space-x-2 py-4">
         <img *ngFor="let image of product.images" 
-             [src]="'http://127.0.0.1:8000/storage/' + image.image_path" 
+             [src]="'https://shopdb-production-cd92.up.railway.app/storage/' + image.image_path" 
              alt="Product Image"
              class="w-24 h-24 object-cover rounded-lg">
       </div>

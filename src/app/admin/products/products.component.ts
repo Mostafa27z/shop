@@ -47,7 +47,7 @@ export class ProductsComponent implements OnInit {
   }
 
   fetchProducts() {
-    this.http.get<any[]>('http://127.0.0.1:8000/api/products').subscribe({
+    this.http.get<any[]>('https://shopdb-production-cd92.up.railway.app/api/products').subscribe({
       next: (data) => {
         this.products = data;
       },
@@ -66,7 +66,7 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(productId: string) {
-    this.http.delete(`http://127.0.0.1:8000/api/products/${productId}`).subscribe({
+    this.http.delete(`https://shopdb-production-cd92.up.railway.app/api/products/${productId}`).subscribe({
       next: () => {
         this.products = this.products.filter(product => product.id !== productId);
       },
@@ -92,8 +92,8 @@ export class ProductsComponent implements OnInit {
     });
 
     const url = this.isEditMode
-      ? `http://127.0.0.1:8000/api/products/${this.currentProduct.id}?_method=PUT`
-      : 'http://127.0.0.1:8000/api/products';
+      ? `https://shopdb-production-cd92.up.railway.app/api/products/${this.currentProduct.id}?_method=PUT`
+      : 'https://shopdb-production-cd92.up.railway.app/api/products';
 
     this.http.post(url, formData).subscribe({
       next: () => {

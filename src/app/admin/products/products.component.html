@@ -37,7 +37,7 @@
             <ng-container *ngIf="product.images?.length > 0; else noImage">
               <img
                 *ngFor="let img of product.images.slice(0, 3)"
-                [src]="'http://127.0.0.1:8000/storage/' + img.image_path"
+                [src]="'https://shopdb-production-cd92.up.railway.app/storage/' + img.image_path"
                 alt="Product Image"
                 class="w-12 h-12 object-cover rounded"
               />

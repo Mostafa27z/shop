@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CouponService {
-  private apiUrl = 'http://127.0.0.1:8000/api/coupons'; // Adjust the API URL
+  private apiUrl = 'https://shopdb-production-cd92.up.railway.app/api/coupons'; // Adjust the API URL
 
   constructor(private http: HttpClient) {}
 
