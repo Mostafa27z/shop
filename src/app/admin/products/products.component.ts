@@ -97,6 +97,7 @@ export class ProductsComponent implements OnInit {
 
     this.http.post(url, formData).subscribe({
       next: () => {
+        console.log(formData);
         this.closeModal();
         this.fetchProducts();
       },
