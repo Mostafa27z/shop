@@ -42,6 +42,13 @@
           >
         </li>
         <li>
+          <a
+            routerLink="/admin/coupon"
+            routerLinkActive="text-black font-semibold border-b-2 border-black pb-1"
+            >coupons</a
+          >
+        </li>
+        <li>
           <button
             (click)="logout()"
             class="text-red-500 hover:text-red-700 transition"
@@ -58,6 +65,7 @@
       <a routerLink="/admin/orders" (click)="toggleMenu()" class="block">Orders</a>
       <a routerLink="/admin/products" (click)="toggleMenu()" class="block">Products</a>
       <a routerLink="/admin/users" (click)="toggleMenu()" class="block">Users</a>
+      <a routerLink="/admin/coupon" (click)="toggleMenu()" class="block">coupon</a>
       <button (click)="logout()" class="text-red-500">Logout</button>
     </div>
   </nav>
